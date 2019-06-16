@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clxs.mapper.BannerMapper">
+  <resultMap id="BaseResultMap" type="com.clxs.pojo.Banner">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, url, img, status, create_at, create_by, update_at, update_by
+  </sql>
+  <select id="selectBanner" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+   <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="url != null">
+        and url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="img != null">
+        and img = #{img,jdbcType = VARCHAR}
+      </if>
+      <if test="status != null">
+        and status=#{status,jdbcType= BIT}
+      </if>
+      <if test="createAt != null">
+        and create_at = #{createAt,jdbcType=BIGINT}
+      </if>
+      <if test="createBy != null">
+        and create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="updateAt != null">
+        and update_at = #{updateAt,jdbcType=BIGINT}
+      </if>
+      <if test="updateBy != null">
+        and update_by=#{updateBy,jdbcType=VARCHAR}
+      </if>
+   </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from banner
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.clxs.pojo.Banner">
+    insert into banner ( url, img,
+      status, create_at, create_by, update_at,
+      update_by)
+    values (#{url,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR},
+      #{status,jdbcType=BIT}, #{createAt,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR} #{updateAt,jdbcType=BIGINT},
+      #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.clxs.pojo.Banner" useGeneratedKeys="true" keyProperty="id">
+    insert into banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="createBy !=null">
+        create_by,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clxs.pojo.Banner">
+    update banner
+    <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by=#{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clxs.pojo.Banner">
+    update banner
+    set url = #{url,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR}
+      update_at = #{updateAt,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--<select id="getBannerList" resultMap="BaseResultMap">-->
+    <!--select * from banner where status=1-->
+  <!--</select>-->
+  <select id="getBannerList" resultMap="BaseResultMap">
+    select * from banner
+   <choose>
+     <when test="status != null">
+       where status=#{status}
+     </when>
+     <otherwise>
+       where 1=1
+     </otherwise>
+   </choose>
+  </select>
+  <select id="getCountUpLoad" resultType="java.lang.Integer">
+    select count(*) from banner where status=1
+  </select>
+</mapper>

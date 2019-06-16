@@ -1,0 +1,14 @@
+com\clxs\service\serviceImpl\MessageServiceImplTest.class
+com\clxs\mapper\ProductMapperTest.class
+com\dao\testBanner.class
+com\clxs\service\WorkerServiceTest.class
+com\clxs\mapper\BannerMapperTest.class
+com\log\testLog.class
+com\clxs\mapper\AccountMapperTest.class
+com\clxs\service\serviceImpl\ProductServiceImplTest.class
+com\service\testBannerService.class
+com\clxs\mapper\WorkerMapperTest.class
+com\clxs\mapper\ProductsMapperTest.class
+com\clxs\service\ProductsServiceTest.class
+com\clxs\service\ProductServiceTest.class
+com\dao\testAccount.class
